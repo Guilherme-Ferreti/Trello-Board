@@ -5,15 +5,17 @@
       class="bg-gray-200 p-1.25 rounded min-w-16"
       :key="column.id"
     >
-      <header>{{ column.title }}</header>
-      <ul>
-        <li
+      <header class="font-bold mb-1">{{ column.title }}</header>
+      <div>
+        <TrelloBoardTask
           v-for="task in column.tasks"
           :key="task.id"
-        >
-          {{ task.title }}
-        </li>
-      </ul>
+          :task="task"
+        />
+        <footer>
+          <button class="text-gray-500">+ Add a Card</button>
+        </footer>
+      </div>
     </div>
   </div>
 </template>
