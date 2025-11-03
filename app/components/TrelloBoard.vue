@@ -62,29 +62,46 @@ import type { Column, Task } from '~/types';
 
 const alt = useKeyModifier('Alt');
 
-const columns = ref<Column[]>([
+const columns = useLocalStorage<Column[]>(
+  'trello-board',
+  [
+    {
+      title: 'Select for Development',
+      id: nanoid(),
+      tasks: [
+        {
+          title: 'Create marketing landing page',
+          createdAt: new Date(),
+          id: nanoid(),
+        },
+        {
+          title: 'Develop cool new feature',
+          createdAt: new Date(),
+          id: nanoid(),
+        },
+        { title: 'Fix page nav bug', createdAt: new Date(), id: nanoid() },
+      ],
+    },
+    { title: 'In Progress', id: nanoid(), tasks: [] },
+    { title: 'Complete', id: nanoid(), tasks: [] },
+  ],
   {
-    title: 'Backlog',
-    id: nanoid(),
-    tasks: [
-      {
-        title: 'Create marketing landing page',
-        createdAt: new Date(),
-        id: nanoid(),
+    serializer: {
+      read: (value) => {
+        return JSON.parse(value).map((column: Column) => {
+          column.tasks = column.tasks.map((task: Task) => {
+            task.createdAt = new Date(task.createdAt);
+
+            return task;
+          });
+          
+          return column;
+        });
       },
-      {
-        title: 'Develop cool new feature',
-        createdAt: new Date(),
-        id: nanoid(),
-      },
-      { title: 'Fix page nav bug', createdAt: new Date(), id: nanoid() },
-    ],
+      write: (value) => JSON.stringify(value),
+    },
   },
-  { title: 'Selected for Dev', id: nanoid(), tasks: [] },
-  { title: 'In Progress', id: nanoid(), tasks: [] },
-  { title: 'QA', id: nanoid(), tasks: [] },
-  { title: 'Complete', id: nanoid(), tasks: [] },
-]);
+);
 
 function addTaskToColumn(task: Task, column: Column) {
   column.tasks.push(task);
