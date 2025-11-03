@@ -5,6 +5,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   ssr: false,
+  app: {
+    baseURL: '/Trello-Board/'
+  },
   modules: ['@vueuse/nuxt'],
   css: ['./app/assets/css/main.css'],
   vite: {
