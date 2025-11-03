@@ -1,8 +1,9 @@
 <template>
   <div
-    class="bg-white p-0.5 mb-0.5 rounded shadow-sm max-w-full"
+    class="bg-white p-0.5 mb-0.5 rounded shadow-sm max-w-full flex"
     :title="task.createdAt.toLocaleDateString()"
   >
+    <DragHandle />
     <span>{{ task.title }}</span>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <span class="drag-handle cursor-move">
+  <span class="drag-handle cursor-move pr-0.5">
     <IconGripVertical class="size-1.25" />
   </span>
 </template>
