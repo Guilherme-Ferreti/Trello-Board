@@ -1,26 +1,32 @@
 <template>
-  <div class="flex gap-1 overflow-x-auto items-start">
-    <div
-      v-for="column in columns"
-      class="bg-gray-200 p-1.25 rounded min-w-16"
-      :key="column.id"
+  <div>
+    <draggable
+      v-model="columns"
+      class="flex gap-1 overflow-x-auto items-start"
+      group="columns"
+      item-key="id"
     >
-      <header class="font-bold mb-1">{{ column.title }}</header>
-      <div>
-        <TrelloBoardTask
-          v-for="task in column.tasks"
-          :key="task.id"
-          :task="task"
-        />
-        <footer>
-          <button class="text-gray-500">+ Add a Card</button>
-        </footer>
-      </div>
-    </div>
+      <template #item="{ element: column }: { element: Column }">
+        <div class="bg-gray-200 p-1.25 rounded min-w-16">
+          <header class="font-bold mb-1">{{ column.title }}</header>
+          <div>
+            <TrelloBoardTask
+              v-for="task in column.tasks"
+              :key="task.id"
+              :task="task"
+            />
+            <footer>
+              <button class="text-gray-500">+ Add a Card</button>
+            </footer>
+          </div>
+        </div>
+      </template>
+    </draggable>
   </div>
 </template>
 
 <script setup lang="ts">
+import draggable from 'vuedraggable';
 import { nanoid } from 'nanoid';
 import type { Column } from '~/types';
 
