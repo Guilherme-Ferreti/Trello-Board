@@ -5,10 +5,15 @@
       class="flex gap-1 overflow-x-auto items-start"
       group="columns"
       item-key="id"
+      :animation="150"
+      handle=".drag-handle"
     >
       <template #item="{ element: column }: { element: Column }">
         <div class="bg-gray-200 p-1.25 rounded min-w-16">
-          <header class="font-bold mb-1">{{ column.title }}</header>
+          <header class="font-bold mb-1 flex gap-0.5 items-center">
+            <DragHandle />
+            {{ column.title }}
+          </header>
           <div>
             <TrelloBoardTask
               v-for="task in column.tasks"
