@@ -1,18 +1,24 @@
 <template>
-  <div>
+  <div class="flex items-start overflow-x-auto gap-1 scrollbar-thin pb-1">
     <draggable
       v-model="columns"
-      class="flex gap-1 overflow-x-auto items-start pb-1 scrollbar-thin"
+      class="flex gap-1 items-start"
       group="columns"
       item-key="id"
       :animation="150"
       handle=".drag-handle"
     >
       <template #item="{ element: column }: { element: Column }">
-        <div class="bg-gray-200 p-1.25 rounded min-w-20">
+        <div class="column bg-gray-200 p-1.25 rounded min-w-20">
           <header class="font-bold mb-1 flex items-center">
             <DragHandle />
-            {{ column.title }}
+            <input
+              v-model="column.title"
+              class="title-input bg-transparent focus:bg-white rounded px-0.25 w-4/5"
+              type="text"
+              @keyup.enter="($event.target as HTMLInputElement).blur()"
+              @keydown.backspace="deleteColumn(column)"
+            />
           </header>
           <div>
             <draggable
@@ -40,6 +46,12 @@
         </div>
       </template>
     </draggable>
+    <button
+      class="bg-gray-200 whitespace-nowrap p-0.5 rounded opacity-50 cursor-pointer"
+      @click="createColumn"
+    >
+      + Add Another Column
+    </button>
   </div>
 </template>
 
@@ -80,5 +92,27 @@ function addTaskToColumn(task: Task, column: Column) {
 
 function deleteTaskFromColumn(task: Task, column: Column) {
   column.tasks = column.tasks.filter((t) => t.id !== task.id);
+}
+
+function createColumn() {
+  const column: Column = {
+    id: nanoid(),
+    title: '',
+    tasks: [],
+  };
+
+  columns.value.push(column);
+
+  nextTick(() =>
+    (document.querySelector('.column:last-of-type .title-input') as HTMLInputElement).focus(),
+  );
+}
+
+function deleteColumn(column: Column) {
+  if (column.title) {
+    return;
+  }
+
+  columns.value = columns.value.filter((c) => c.id !== column.id);
 }
 </script>
