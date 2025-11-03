@@ -2,7 +2,11 @@
   <div class="flex">
     <textarea
       v-model.trim="title"
-      class="focus:bg-white focus:shadow resize-none rounded w-full border-none bg-transparent p-0.5 cursor-pointer outline-none! box-content h-lh scrollbar-thin"
+      class="focus:bg-white focus:shadow resize-none rounded w-full border-none bg-transparent p-0.5 cursor-pointer outline-none! box-content scrollbar-thin"
+      :class="{
+        'h-lh': !focused,
+        ' h-[3lh]': focused,
+      }"
       @keydown.tab="createTask"
       @keydown.enter="createTask"
       @focus="focused = true"

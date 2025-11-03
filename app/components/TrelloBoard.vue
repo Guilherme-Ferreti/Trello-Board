@@ -26,12 +26,15 @@
             >
               <template #item="{ element: task }: { element: Task }">
                 <div>
-                  <TrelloBoardTask :task="task" />
+                  <TrelloBoardTask
+                    :task="task"
+                    @delete="deleteTaskFromColumn(task, column)"
+                  />
                 </div>
               </template>
             </draggable>
             <footer>
-              <NewTask @add="column.tasks.push($event)" />
+              <NewTask @add="addTaskToColumn($event, column)" />
             </footer>
           </div>
         </div>
@@ -70,4 +73,12 @@ const columns = ref<Column[]>([
   { title: 'QA', id: nanoid(), tasks: [] },
   { title: 'Complete', id: nanoid(), tasks: [] },
 ]);
+
+function addTaskToColumn(task: Task, column: Column) {
+  column.tasks.push(task);
+}
+
+function deleteTaskFromColumn(task: Task, column: Column) {
+  column.tasks = column.tasks.filter((t) => t.id !== task.id);
+}
 </script>
