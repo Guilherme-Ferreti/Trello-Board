@@ -14,6 +14,6 @@
 import { IconBrandNuxt } from '@tabler/icons-vue';
 
 useSeoMeta({
-  title: 'Trello Board'
-})
+  title: 'Trello Board',
+});
 </script>

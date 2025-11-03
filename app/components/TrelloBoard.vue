@@ -29,6 +29,7 @@
               }"
               item-key="id"
               :animation="150"
+              handle=".drag-handle"
             >
               <template #item="{ element: task }: { element: Task }">
                 <div>
@@ -94,7 +95,7 @@ const columns = useLocalStorage<Column[]>(
 
             return task;
           });
-          
+
           return column;
         });
       },
