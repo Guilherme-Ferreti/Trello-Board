@@ -9,7 +9,7 @@
       handle=".drag-handle"
     >
       <template #item="{ element: column }: { element: Column }">
-        <div class="bg-gray-200 p-1.25 rounded w-20">
+        <div class="bg-gray-200 p-1.25 rounded min-w-20">
           <header class="font-bold mb-1 flex items-center">
             <DragHandle />
             {{ column.title }}
@@ -31,7 +31,7 @@
               </template>
             </draggable>
             <footer>
-              <button class="text-gray-500">+ Add a Card</button>
+              <NewTask @add="column.tasks.push($event)" />
             </footer>
           </div>
         </div>

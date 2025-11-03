@@ -1,6 +1,6 @@
 <template>
   <div
-    class="task bg-white p-0.5 mb-0.5 rounded shadow-sm max-w-full flex"
+    class="task bg-white p-0.5 mb-0.5 rounded shadow-sm max-w-full flex break-word"
     :title="task.createdAt.toLocaleDateString()"
   >
     <DragHandle />
