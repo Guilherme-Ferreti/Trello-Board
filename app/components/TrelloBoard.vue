@@ -2,14 +2,14 @@
   <div>
     <draggable
       v-model="columns"
-      class="flex gap-1 overflow-x-auto items-start"
+      class="flex gap-1 overflow-x-auto items-start pb-1 scrollbar-thin"
       group="columns"
       item-key="id"
       :animation="150"
       handle=".drag-handle"
     >
       <template #item="{ element: column }: { element: Column }">
-        <div class="bg-gray-200 p-1.25 rounded min-w-16">
+        <div class="bg-gray-200 p-1.25 rounded w-20">
           <header class="font-bold mb-1 flex items-center">
             <DragHandle />
             {{ column.title }}
@@ -17,12 +17,17 @@
           <div>
             <draggable
               v-model="column.tasks"
-              group="tasks"
+              :group="{
+                name: 'tasks',
+                pull: alt ? 'clone' : true,
+              }"
               item-key="id"
               :animation="150"
             >
               <template #item="{ element: task }: { element: Task }">
-                <TrelloBoardTask :task="task" />
+                <div>
+                  <TrelloBoardTask :task="task" />
+                </div>
               </template>
             </draggable>
             <footer>
@@ -39,6 +44,8 @@
 import draggable from 'vuedraggable';
 import { nanoid } from 'nanoid';
 import type { Column, Task } from '~/types';
+
+const alt = useKeyModifier('Alt');
 
 const columns = ref<Column[]>([
   {
